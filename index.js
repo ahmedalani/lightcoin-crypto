@@ -23,12 +23,22 @@ class Transaction {
     this.account = account;
   }
   commit() {
+    if (!this.isAllowed()) {
+      console.log('insufficient funds!');
+      return;
+    }
     // change amount to value
     // this.amount = this.value;
     // Keep track of the time of the transaction
     this.time = new Date();
     // Add the transaction to the account
     this.account.addTransaction(this);
+  }
+  isAllowed() {
+    if (this.value < 0) {
+      return this.amount <= this.account.balance;
+    }
+    return true;
   }
 
 }
@@ -59,5 +69,7 @@ const t2 = new Withdrawal(50.00, myAccount);
 t2.commit();
 // console.log(t2)
 
+const t3 = new Withdrawal(70.01, myAccount);
+t3.commit();
 // myAccount.transactions.forEach(t => console.log(t.value))
 console.log('Ending Balance:', myAccount.balance);
