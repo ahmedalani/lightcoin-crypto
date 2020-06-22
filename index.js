@@ -23,12 +23,11 @@ class Transaction {
     this.account = account;
   }
   commit() {
+    // check for sufficient funds
     if (!this.isAllowed()) {
       console.log('insufficient funds!');
       return;
     }
-    // change amount to value
-    // this.amount = this.value;
     // Keep track of the time of the transaction
     this.time = new Date();
     // Add the transaction to the account
@@ -63,13 +62,11 @@ console.log('Starting Balance:', myAccount.balance);
 
 const t1 = new Deposit(120.00, myAccount);
 t1.commit();
-// console.log(t1.account.transactions[0])
 
 const t2 = new Withdrawal(50.00, myAccount);
 t2.commit();
-// console.log(t2)
 
 const t3 = new Withdrawal(70.01, myAccount);
 t3.commit();
-// myAccount.transactions.forEach(t => console.log(t.value))
+
 console.log('Ending Balance:', myAccount.balance);
